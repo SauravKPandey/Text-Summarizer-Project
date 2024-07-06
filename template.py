@@ -29,7 +29,8 @@ list_of_files = [
 ]
 
 for file_path in list_of_files:
-    file_path= Path(file_path)
+    """Converts file_path into Path object"""
+    file_path= Path(file_path) 
     file_dir, file_name= os.path.split(file_path)
     if file_dir !="":
         os.makedirs(file_dir, exist_ok=True)
