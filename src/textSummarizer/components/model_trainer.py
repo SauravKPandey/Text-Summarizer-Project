@@ -19,12 +19,12 @@ class ModelTrainer:
         self.config= config
 
     def train(self):
-        device= "cuda" if torch.cuda.is_available() else "cpu"
+        device= torch.device('cpu')
         tokenizer= AutoTokenizer.from_pretrained(self.config.model_ckpt)
         model_pegasus= AutoModelForSeq2SeqLM.from_pretrained(self.config.model_ckpt).to(device)
         seq2seq_data_collator = DataCollatorForSeq2Seq(tokenizer, model=model_pegasus)
         
-        dataset_samsum=load_from_disk('samsum_dataset')
+        dataset_samsum=load_from_disk(self.config.data_path)
         trainer_args = TrainingArguments(
             output_dir='pegasus-samsum', num_train_epochs=self.config.num_train_epochs, 
             warmup_steps=self.config.warmup_steps,
